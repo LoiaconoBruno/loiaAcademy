@@ -1,0 +1,13 @@
+título,autor,materia,año,editorial,nota
+Matemática 1 (serie Avanza),,Matemática,1º,Kapelusz,
+Matemática 2 (serie Avanza),,Matemática,2º,Kapelusz,
+Matemática 4 (serie Avanza),,Matemática,4º,Kapelusz,También existe Matemática 4 de la serie Transforma.
+Matemática 5 (serie Avanza),,Matemática,5º,Kapelusz,
+Matemática 6 (serie Transforma),,Matemática,6º,Kapelusz,"Al ser de secundaria, no cubre derivadas parciales ni funciones de varias variables."
+Cálculo de varias variables,James Stewart,Matemática,6º,Cengage,"Para derivadas parciales, varias variables y vectores en 3D."
+Física conceptual,Paul Hewitt,Física,"1º, 2º, 3º, 4º",Pearson,Explica con conceptos antes que con fórmulas.
+Introducción a la física,Maiztegui y Sabato,Física,"1º, 2º, 3º, 4º",Kapelusz,Clásico argentino de física para secundaria.
+"Fundamentos de Física, Vol. 1",Serway y Vuille,Física,"5º, 6º",Cengage,"Física sin cálculo, con álgebra y trigonometría."
+"Fundamentos de Física, Vol. 2",Serway y Vuille,Física,"5º, 6º",Cengage,Continuación del Vol. 1.
+Física moderna,"Serway, Moses y Moyer",Física,"5º, 6º",Cengage,"Cubre relatividad, cuántica, física nuclear y de partículas."
+Física para Ciencias e Ingeniería,Serway,Física,6º,Cengage,Usa cálculo: es nivel universitario. Sirve como preuniversitario o para profundizar.
