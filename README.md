@@ -1,49 +1,34 @@
-<p align="center">
-  <img src="assets/banner.png" alt="loiaAcademy: matemática y física de secundaria, de 1º a 6º año" width="100%">
-</p>
-
 # loiaAcademy
 
 **Matemática y física de secundaria, de 1º a 6º año, explicadas con pizarrón en YouTube.**
 
-▶️ **[Mirá el canal en YouTube](https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law)**
+🌐 **Página:** https://loiaconobruno.github.io/loiaAcademy/<br>
+▶️ **Canal:** [loiaAcademy en YouTube](https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law)
 
-Acá está el mapa del canal: el temario completo, para qué sirve cada tema, cómo se conectan Matemática y Física, y los libros de referencia.
+loiaAcademy es un canal de YouTube para entender matemática y física de secundaria, de 1º a 6º año. Cada tema tiene una clase larga con pizarrón, paso a paso y con todo el rigor, y un Short que muestra para qué sirve en la vida real. Además, hay Shorts sobre descubrimientos científicos recientes: qué se encontró, por qué importa y qué tenés que estudiar para entenderlo.
 
-## Los tres formatos
+## Qué hay en la página
 
-| | Formato | Qué es |
-|:---:|---|---|
-| 🎓 | **Clases** | Un video largo por tema, con pizarrón. |
-| 📱 | **¿Para qué sirve?** | Un Short por tema que muestra para qué sirve en la vida real. No explica la matemática: termina con «si querés ver la matemática, tocá el video de abajo» y te lleva a la clase. |
-| 🔭 | **Recién descubierto** | Shorts de ciencia nueva, al estilo de [Be Smart](https://www.youtube.com/@besmart): en menos de 3 minutos, qué se descubrió, por qué importa y qué tenés que estudiar para llegar ahí. |
+- **Los tres formatos:** clases, Shorts «¿Para qué sirve?» y Shorts «Recién descubierto».
+- **El temario:** los 78 temas (43 de Matemática y 35 de Física), con filtros por materia y por año y una búsqueda. Cada tema muestra su año, su eje y para qué sirve.
+- **Los libros** de referencia, por materia y año.
 
-Todo se publica en YouTube; nada va a Reels ni a TikTok.
-
-## Buscá tu tema
-
-Elegí la materia y el año: llegás a la tabla con cada tema, su eje, para qué sirve y el link al video.
-
-| Año | 🧮 Matemática | ⚛️ Física |
-|:---:|:---:|:---:|
-| 1º | [9 temas](temario/matematica.md#1º-año) | [7 temas](temario/fisica.md#1º-año) |
-| 2º | [8 temas](temario/matematica.md#2º-año) | [7 temas](temario/fisica.md#2º-año) |
-| 3º | [7 temas](temario/matematica.md#3º-año) | [6 temas](temario/fisica.md#3º-año) |
-| 4º | [7 temas](temario/matematica.md#4º-año) | [6 temas](temario/fisica.md#4º-año) |
-| 5º | [6 temas](temario/matematica.md#5º-año) | [5 temas](temario/fisica.md#5º-año) |
-| 6º | [6 temas](temario/matematica.md#6º-año) | [4 temas](temario/fisica.md#6º-año) |
-| **Total** | [**43 temas**](temario/matematica.md) | [**35 temas**](temario/fisica.md) |
-
-**¿Tu año no coincide?** Los años cambian según la provincia: en CABA la secundaria dura 5 años; en Provincia de Buenos Aires y en Córdoba, 6. Por eso cada tema tiene también su eje (Funciones, Mecánica, Trigonometría…). Buscalo por eje en [Matemática](temario/matematica.md#por-eje) o en [Física](temario/fisica.md#por-eje).
-
-## Qué más hay acá
+## Cómo está organizado el repo
 
 | Archivo | Qué tiene |
 |---|---|
-| [mapas.md](mapas.md) | Cómo se conectan los temas de Matemática con los de Física, y cómo nace cada Short. |
-| [shorts.md](shorts.md) | El formato de «¿Para qué sirve?» y «Recién descubierto», de dónde salen las noticias y cómo se verifican. |
-| [libros.md](libros.md) | Los libros de referencia, por materia y año. |
-| [data/temario.csv](data/temario.csv) | Los 78 temas en una planilla, para filtrarla o importarla. |
+| [index.html](index.html) | La página, en un solo archivo HTML. |
+| [css/estilos.css](css/estilos.css) | Los estilos de la página. |
+| [js/app.js](js/app.js) | Arma el temario y los libros desde `data/`, con los filtros y la búsqueda. |
+| [data/temario.csv](data/temario.csv) | Los 78 temas: orden, tema, materia, año, eje, para qué sirve y los links a la clase y al Short. Es la única fuente del temario: la página lo lee y GitHub lo muestra como tabla. |
+| [data/libros.csv](data/libros.csv) | Los libros: título, autor, materia, año, editorial y una nota. |
+| [assets/img/](assets/img/) | Las imágenes de la página. |
+| [mapas.md](mapas.md) | Cómo se conectan los temas de Matemática con los de Física, y cómo pasás de un Short a la clase que lo explica. |
+| [shorts.md](shorts.md) | Cómo son los Shorts «¿Para qué sirve?» y «Recién descubierto»: formato, fuentes, criterios y cómo se verifica cada dato. |
+| [LICENSE](LICENSE) | La licencia CC BY-NC-SA 4.0. |
+| `.nojekyll` | Hace que GitHub Pages publique los archivos tal cual, sin procesarlos. |
+
+La página es HTML, CSS y JavaScript, sin frameworks ni paso de build. Los datos están en `data/` y se pueden descargar como CSV.
 
 ## Licencia
 
