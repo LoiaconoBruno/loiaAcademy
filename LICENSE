@@ -2,8 +2,9 @@ loiaAcademy
 Copyright (c) 2026 Bruno Loiacono
 
 Salvo que se indique lo contrario, el contenido de este repositorio (textos,
-tablas, diagramas y datos) se publica bajo la licencia Creative Commons
-Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0).
+tablas, diagramas, datos y el código de la página) se publica bajo la licencia
+Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional
+(CC BY-NC-SA 4.0).
 
 Podés compartir y adaptar el material, siempre que:
 
@@ -12,8 +13,8 @@ Podés compartir y adaptar el material, siempre que:
 - no lo uses con fines comerciales;
 - compartas tus adaptaciones con la misma licencia.
 
-El logo y el banner de loiaAcademy (carpeta assets/) no están incluidos en
-esta licencia.
+El logo de loiaAcademy y las fotos que se agreguen en assets/img/ no están
+incluidos en esta licencia.
 
 Resumen de la licencia: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
 Texto legal completo:   https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.es
