@@ -15,8 +15,8 @@ En loiaAcademy hay dos tipos de Shorts: **«¿Para qué sirve?»**, uno por cada
 
 Cada tema del temario tiene un Short que te muestra para qué sirve en la vida real. Por ejemplo:
 
-- **Funciones lineales y gráficos en el plano cartesiano** (Matemática, 2º año): la tarifa del taxi, bajada de bandera más un monto por kilómetro.
-- **Leyes de Newton** (Física, 2º año): por qué el cinturón de seguridad te salva en un choque.
+- **Funciones lineales y gráficos en el plano cartesiano** (Precálculo): la tarifa del taxi, bajada de bandera más un monto por kilómetro.
+- **Leyes de Newton** (Física 1): por qué el cinturón de seguridad te salva en un choque.
 
 Lo que tenés que saber:
 
@@ -28,7 +28,7 @@ El recorrido, del Short a la clase, está en el [flujo de «¿Para qué sirve?»
 
 ## Recién descubierto
 
-Shorts sobre descubrimientos científicos recientes, pensados para quienes están en la secundaria o en los primeros años de la facultad. En menos de 3 minutos vas a ver qué se descubrió, por qué importa y qué tenés que estudiar para entenderlo.
+Shorts sobre descubrimientos científicos recientes, pensados para quienes están en el ingreso o en los primeros años de la facultad. En menos de 3 minutos vas a ver qué se descubrió, por qué importa y qué tenés que estudiar para entenderlo.
 
 El recorrido, del descubrimiento a la clase, está en el [flujo de «Recién descubierto»](mapas.md#flujo-de-recién-descubierto).
 
@@ -72,7 +72,7 @@ Estas son las fuentes que se siguen. Las primeras sirven para enterarse; los dat
 Para elegir qué descubrimiento contar se usan estos criterios, y el que no los pasa queda afuera:
 
 1. **Tiene revisión de pares o lo anuncia una institución reconocida.** La revisión de pares significa que otros científicos revisaron el trabajo antes de publicarlo. Si es un preprint, es decir, un trabajo que todavía no pasó esa revisión, va igual, pero se dice en pantalla.
-2. **Se puede explicar con lo que se ve en la secundaria o en el CBC** (el Ciclo Básico Común de la UBA).
+2. **Se puede explicar con lo que se ve en el ingreso o en los primeros años de la facultad.**
 3. **Tiene algo para mostrar:** una imagen, un número que sorprenda o un experimento.
 4. **Es reciente**, de los últimos tres meses, **o un premio lo vuelve actual.**
 5. **Se conecta con un tema del temario.**

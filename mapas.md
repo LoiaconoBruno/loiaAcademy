@@ -1,105 +1,121 @@
 # 🗺️ Mapas
 
-Cómo se ordenan los 78 temas, cómo se conectan Matemática y Física, y cómo te llevan los Shorts hasta cada clase. El temario completo, con filtros y búsqueda, está en la [página](https://loiaconobruno.github.io/loiaAcademy/#temario) y en [data/temario.csv](data/temario.csv). Volvé al [inicio](README.md).
+Cómo se ordenan los 78 temas por curso, cómo se conectan Matemática y Física, y cómo te llevan los Shorts hasta cada clase. El temario completo, con filtros y búsqueda, está en la [página](https://loiaconobruno.github.io/loiaAcademy/#temario) y en [data/temario.csv](data/temario.csv). Volvé al [inicio](README.md).
 
-- [Recorrido por año](#recorrido-por-año)
+- [Recorrido por curso](#recorrido-por-curso)
 - [Conexiones entre Matemática y Física](#conexiones-entre-matemática-y-física)
-- [Antes de estos temas, mirá la matemática que usan](#antes-de-estos-temas-mirá-la-matemática-que-usan)
+- [Qué matemática usan algunos temas de Física](#qué-matemática-usan-algunos-temas-de-física)
 - [Flujo del Short «¿Para qué sirve?»](#flujo-del-short-para-qué-sirve)
 - [Flujo de «Recién descubierto»](#flujo-de-recién-descubierto)
 
-## Recorrido por año
+## Recorrido por curso
 
-Los 78 temas, año por año: 43 de Matemática y 35 de Física.
+Los 78 temas, curso por curso: 43 de Matemática y 35 de Física.
 
 ```mermaid
-flowchart LR
-    classDef anio fill:#0A2237,stroke:#536679,stroke-width:2px,color:#FFFFFF
+flowchart TB
+    classDef curso fill:#0A2237,stroke:#536679,stroke-width:2px,color:#FFFFFF
 
-    A1["<b>1º año</b><br/>16 temas<br/>🧮 9 · ⚛️ 7"]:::anio
-    A2["<b>2º año</b><br/>15 temas<br/>🧮 8 · ⚛️ 7"]:::anio
-    A3["<b>3º año</b><br/>13 temas<br/>🧮 7 · ⚛️ 6"]:::anio
-    A4["<b>4º año</b><br/>13 temas<br/>🧮 7 · ⚛️ 6"]:::anio
-    A5["<b>5º año</b><br/>11 temas<br/>🧮 6 · ⚛️ 5"]:::anio
-    A6["<b>6º año</b><br/>10 temas<br/>🧮 6 · ⚛️ 4"]:::anio
+    subgraph MAT["🧮 Matemática · 43 temas"]
+        direction LR
+        PRE["<b>Precálculo</b><br/>28 temas"]:::curso
+        C1["<b>Cálculo 1</b><br/>4 temas"]:::curso
+        C2["<b>Cálculo 2</b><br/>2 temas"]:::curso
+        AGA["<b>Álgebra y<br/>geometría analítica</b><br/>5 temas"]:::curso
+        PYE["<b>Probabilidad<br/>y estadística</b><br/>4 temas"]:::curso
+        PRE --> C1 --> C2
+        PRE --> AGA
+        PRE --> PYE
+    end
 
-    A1 --> A2 --> A3 --> A4 --> A5 --> A6
+    subgraph FIS["⚛️ Física · 35 temas"]
+        direction LR
+        INT["<b>Introducción<br/>a la física</b><br/>7 temas"]:::curso
+        F1["<b>Física 1</b><br/>7 temas"]:::curso
+        F2["<b>Física 2</b><br/>9 temas"]:::curso
+        F3["<b>Física 3</b><br/>7 temas"]:::curso
+        FM["<b>Física moderna</b><br/>5 temas"]:::curso
+        INT --> F1 --> F2 --> F3 --> FM
+    end
+
+    MAT ~~~ FIS
+
+    style MAT fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
+    style FIS fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
 ```
-
-Los temas de 6º de Matemática son de nivel preuniversitario: en la facultad se ven en Análisis II y Álgebra.
 
 ## Conexiones entre Matemática y Física
 
 Cada flecha une un tema de Matemática con el tema de Física que lo usa. El número es el del temario.
 
-- **Flecha azul:** a tiempo. Matemática lo enseña ese mismo año o antes.
-- **Flecha naranja punteada:** desfasado. Física lo usa antes de que Matemática lo enseñe.
-- **Borde naranja:** tema de Física que usa matemática de un año posterior.
-
 ```mermaid
 flowchart LR
     classDef mat fill:#E6F2FF,stroke:#007BFF,color:#0A2237
     classDef fis fill:#F0F4F8,stroke:#536679,color:#0A2237
-    classDef desfasado fill:#F0F4F8,stroke:#CC7830,stroke-width:3px,color:#0A2237
 
     subgraph MAT["🧮 Matemática"]
-        M4["4 · Proporcionalidad directa e inversa<br/>1º año"]:::mat
-        M13["13 · Funciones lineales y gráficos en el plano cartesiano<br/>2º año"]:::mat
-        M18["18 · Ecuaciones y desigualdades de primer y segundo grado<br/>3º año"]:::mat
-        M19["19 · Funciones cuadráticas: la parábola<br/>3º año"]:::mat
-        M21["21 · Introducción a la trigonometría: seno, coseno y tangente<br/>3º año"]:::mat
-        M26["26 · Funciones exponenciales y logarítmicas<br/>4º año"]:::mat
-        M32["32 · Derivadas y sus aplicaciones: máximos, mínimos y tasas de cambio<br/>5º año"]:::mat
-        M33["33 · Integrales básicas y áreas bajo curvas<br/>5º año"]:::mat
-        M36["36 · Vectores en el plano<br/>5º año"]:::mat
+        M4["4 · Proporcionalidad directa e inversa<br/>Precálculo"]:::mat
+        M13["13 · Funciones lineales y gráficos en el plano cartesiano<br/>Precálculo"]:::mat
+        M18["18 · Ecuaciones y desigualdades de primer y segundo grado<br/>Precálculo"]:::mat
+        M19["19 · Funciones cuadráticas: la parábola<br/>Precálculo"]:::mat
+        M21["21 · Introducción a la trigonometría: seno, coseno y tangente<br/>Precálculo"]:::mat
+        M26["26 · Funciones exponenciales y logarítmicas<br/>Precálculo"]:::mat
+        M32["32 · Derivadas y sus aplicaciones: máximos, mínimos y tasas de cambio<br/>Cálculo 1"]:::mat
+        M33["33 · Integrales básicas y áreas bajo curvas<br/>Cálculo 1"]:::mat
+        M36["36 · Vectores en el plano<br/>Álgebra y geometría analítica"]:::mat
     end
 
     subgraph FIS["⚛️ Física"]
-        F3["3 · Movimiento: posición, velocidad y tiempo<br/>1º año"]:::fis
-        F4["4 · Fuerzas y equilibrio<br/>1º año"]:::desfasado
-        F8["8 · Movimiento rectilíneo uniforme y uniformemente acelerado (MRU y MRUV)<br/>2º año"]:::desfasado
-        F9["9 · Caída libre<br/>2º año"]:::desfasado
-        F10["10 · Leyes de Newton<br/>2º año"]:::desfasado
-        F19["19 · Ondas mecánicas y sonido<br/>3º año"]:::desfasado
-        F20["20 · Luz y óptica geométrica: reflexión y refracción<br/>3º año"]:::fis
-        F21["21 · Electricidad estática: carga, campo y potencial eléctrico<br/>4º año"]:::desfasado
-        F27["27 · Movimiento armónico simple y ondas electromagnéticas<br/>5º año"]:::fis
-        F29["29 · Termodinámica: leyes y procesos<br/>5º año"]:::fis
-        F33["33 · Física nuclear: radiactividad, fisión y fusión<br/>6º año"]:::fis
+        F3["3 · Movimiento: posición, velocidad y tiempo<br/>Introducción a la física"]:::fis
+        F4["4 · Fuerzas y equilibrio<br/>Introducción a la física"]:::fis
+        F8["8 · Movimiento rectilíneo uniforme y uniformemente acelerado (MRU y MRUV)<br/>Física 1"]:::fis
+        F9["9 · Caída libre<br/>Física 1"]:::fis
+        F10["10 · Leyes de Newton<br/>Física 1"]:::fis
+        F19["19 · Ondas mecánicas y sonido<br/>Física 2"]:::fis
+        F20["20 · Luz y óptica geométrica: reflexión y refracción<br/>Física 2"]:::fis
+        F21["21 · Electricidad estática: carga, campo y potencial eléctrico<br/>Física 3"]:::fis
+        F27["27 · Movimiento armónico simple y ondas electromagnéticas<br/>Física 2"]:::fis
+        F29["29 · Termodinámica: leyes y procesos<br/>Física 2"]:::fis
+        F33["33 · Física nuclear: radiactividad, fisión y fusión<br/>Física moderna"]:::fis
     end
 
     style MAT fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
     style FIS fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
 
     M4 --> F3
+    M36 --> F4
     M13 --> F8
+    M18 --> F8
+    M19 --> F9
+    M21 --> F10
+    M26 --> F19
     M21 --> F20
+    M36 --> F21
     M32 --> F27
     M33 --> F29
     M26 --> F33
-    M18 -. 1 año antes .-> F8
-    M19 -. 1 año antes .-> F9
-    M21 -. 1 año antes .-> F10
-    M26 -. 1 año antes .-> F19
-    M36 -. 1 año antes .-> F21
-    M36 -. 4 años antes .-> F4
 
-    linkStyle 0,1,2,3,4,5 stroke:#007BFF,stroke-width:3px
-    linkStyle 6,7,8,9,10,11 stroke:#CC7830,stroke-width:3px
+    linkStyle default stroke:#007BFF,stroke-width:2px
 ```
 
-## Antes de estos temas, mirá la matemática que usan
+## Qué matemática usan algunos temas de Física
 
-Seis temas de Física usan matemática que en el temario aparece en un año posterior. Si llegás a uno de ellos, conviene ver antes la clase de Matemática.
+Si vas a ver uno de estos temas de Física, te conviene tener vista antes la clase de Matemática que usa.
 
-| Tema de Física | Usa este tema de Matemática | Que se ve |
-|---|---|---|
-| 4 · Fuerzas y equilibrio (1º) | 36 · Vectores en el plano (5º) | 4 años después |
-| 8 · Movimiento rectilíneo uniforme y uniformemente acelerado (MRU y MRUV) (2º) | 18 · Ecuaciones y desigualdades de primer y segundo grado (3º) | 1 año después |
-| 9 · Caída libre (2º) | 19 · Funciones cuadráticas: la parábola (3º) | 1 año después |
-| 10 · Leyes de Newton (2º) | 21 · Introducción a la trigonometría: seno, coseno y tangente (3º) | 1 año después |
-| 19 · Ondas mecánicas y sonido (3º) | 26 · Funciones exponenciales y logarítmicas (4º) | 1 año después |
-| 21 · Electricidad estática: carga, campo y potencial eléctrico (4º) | 36 · Vectores en el plano (5º) | 1 año después |
+| Tema de Física | Curso | Usa este tema de Matemática | Curso |
+|---|---|---|---|
+| 3 · Movimiento: posición, velocidad y tiempo | Introducción a la física | 4 · Proporcionalidad directa e inversa | Precálculo |
+| 4 · Fuerzas y equilibrio | Introducción a la física | 36 · Vectores en el plano | Álgebra y geometría analítica |
+| 8 · Movimiento rectilíneo uniforme y uniformemente acelerado (MRU y MRUV) | Física 1 | 13 · Funciones lineales y gráficos en el plano cartesiano | Precálculo |
+| 8 · Movimiento rectilíneo uniforme y uniformemente acelerado (MRU y MRUV) | Física 1 | 18 · Ecuaciones y desigualdades de primer y segundo grado | Precálculo |
+| 9 · Caída libre | Física 1 | 19 · Funciones cuadráticas: la parábola | Precálculo |
+| 10 · Leyes de Newton | Física 1 | 21 · Introducción a la trigonometría: seno, coseno y tangente | Precálculo |
+| 19 · Ondas mecánicas y sonido | Física 2 | 26 · Funciones exponenciales y logarítmicas | Precálculo |
+| 20 · Luz y óptica geométrica: reflexión y refracción | Física 2 | 21 · Introducción a la trigonometría: seno, coseno y tangente | Precálculo |
+| 21 · Electricidad estática: carga, campo y potencial eléctrico | Física 3 | 36 · Vectores en el plano | Álgebra y geometría analítica |
+| 27 · Movimiento armónico simple y ondas electromagnéticas | Física 2 | 32 · Derivadas y sus aplicaciones: máximos, mínimos y tasas de cambio | Cálculo 1 |
+| 29 · Termodinámica: leyes y procesos | Física 2 | 33 · Integrales básicas y áreas bajo curvas | Cálculo 1 |
+| 33 · Física nuclear: radiactividad, fisión y fusión | Física moderna | 26 · Funciones exponenciales y logarítmicas | Precálculo |
 
 ## Flujo del Short «¿Para qué sirve?»
 
@@ -141,7 +157,7 @@ flowchart TB
 
     d(["Un descubrimiento<br/>aparece en phys.org,<br/>ScienceDaily<br/>o EurekAlert!"]):::terminator
     nb(["Semana Nobel,<br/>cada octubre:<br/>Medicina, Física<br/>y Química"]):::terminator
-    c{{"¿Pasa los criterios?<br/>revisión de pares,<br/>se explica con lo que<br/>se ve en la secundaria,<br/>es reciente"}}:::decision
+    c{{"¿Pasa los criterios?<br/>revisión de pares,<br/>se explica con lo que<br/>se ve en el ingreso<br/>o en los primeros<br/>años de la facultad,<br/>es reciente"}}:::decision
     x(["Queda afuera"]):::terminator
     v["Se verifica cada dato:<br/>paper con DOI,<br/>dos fechas,<br/>segunda fuente,<br/>crédito de las imágenes"]:::general
     s["Mirás el Short:<br/>hasta 3 minutos,<br/>con subtítulos,<br/>la fuente y su fecha<br/>en pantalla"]:::general
