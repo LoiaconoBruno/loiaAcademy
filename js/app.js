@@ -3,10 +3,8 @@
 (() => {
   'use strict';
 
-  const ANIOS = ['1º', '2º', '3º', '4º', '5º', '6º'];
   const MATERIAS = ['Matemática', 'Física'];
   const REPO = 'https://github.com/LoiaconoBruno/loiaAcademy/blob/main/';
-  const NOTA_6_MATEMATICA = 'Los temas de 6º de Matemática son de nivel preuniversitario: en la facultad se ven en Análisis II y Álgebra.';
 
   // CSV según RFC 4180: campos entre comillas con comas, comillas dobles ("") y saltos de línea adentro.
   function parsearCSV(texto) {
@@ -55,18 +53,24 @@
     return resto.map((f) => Object.fromEntries(claves.map((k, j) => [k, (f[j] || '').trim()])));
   }
 
-  // Minúsculas y sin tildes. NFD (no NFKD) para que «º» no se convierta en «o».
+  // Minúsculas y sin tildes (se quitan las marcas que deja NFD).
   function normalizar(texto) {
-    return String(texto).replace(/°/g, 'º').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+    return String(texto).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/\s+/g, ' ').trim();
   }
 
-  // «1°» (signo de grado) es un error de tipeo común: se toma como «1º».
-  function normalizarAnio(texto) {
-    return String(texto || '').replace(/°/g, 'º').trim();
+  // «Cálculo 1» → «calculo-1», para la URL.
+  function aSlug(texto) {
+    return normalizar(texto).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   }
 
-  function separarAnios(texto) {
-    return [...new Set(String(texto || '').split(',').map(normalizarAnio))].filter((a) => ANIOS.includes(a));
+  // «¿Física 1?» → ['fisica', '1'], para buscar por palabras.
+  function aPalabras(texto) {
+    return normalizar(texto).split(/[^a-z0-9]+/).filter(Boolean);
+  }
+
+  // Un número tiene que ser igual («1» no trae «100%»); una palabra, el comienzo de otra («parab» trae «parábola»).
+  function coincide(buscada, palabra) {
+    return /^\d+$/.test(buscada) ? palabra === buscada : palabra.startsWith(buscada);
   }
 
   function normalizarMateria(texto) {
@@ -137,29 +141,34 @@
 
   /* Temario */
 
+  // Los cursos salen del CSV, en el orden en que aparecen (Precálculo, Cálculo 1… y después los de Física).
   function prepararTemas(filas) {
     const validas = filas
-      .map((f) => ({ ...f, materia: normalizarMateria(f.materia), anio: normalizarAnio(f['año']) }))
-      .filter((f) => MATERIAS.includes(f.materia) && ANIOS.includes(f.anio) && f.tema);
+      .map((f) => ({ ...f, materia: normalizarMateria(f.materia), curso: (f.curso || '').trim() }))
+      .filter((f) => MATERIAS.includes(f.materia) && f.curso && f.tema);
     if (validas.length < filas.length) {
       const ignoradas = filas.length - validas.length;
-      console.warn(`data/temario.csv: ${plural(ignoradas, 'fila ignorada', 'filas ignoradas')} (materia, año o tema no reconocidos)`);
+      console.warn(`data/temario.csv: ${plural(ignoradas, 'fila ignorada', 'filas ignoradas')} (materia, curso o tema no reconocidos)`);
     }
-    return validas
+    const cursos = [];
+    for (const f of validas) {
+      if (!cursos.some((c) => c.nombre === f.curso)) cursos.push({ nombre: f.curso, materia: f.materia, slug: aSlug(f.curso) });
+    }
+    const posicion = (nombre) => cursos.findIndex((c) => c.nombre === nombre);
+    const temas = validas
       .map((f) => ({
         orden: Number(f.orden),
         tema: f.tema,
         materia: f.materia,
-        anio: f.anio,
+        curso: f.curso,
         eje: f.eje,
         para: f.para_que_sirve,
         video: f.link_video,
         short: f.link_short,
-        busqueda: normalizar([f.tema, `eje ${f.eje}`, f.para_que_sirve, f.materia, `${f.anio} año`].join(' ')),
+        palabras: aPalabras([f.tema, `eje ${f.eje}`, f.para_que_sirve, f.materia, f.curso].join(' ')),
       }))
-      .sort((a, b) => ANIOS.indexOf(a.anio) - ANIOS.indexOf(b.anio)
-        || MATERIAS.indexOf(a.materia) - MATERIAS.indexOf(b.materia)
-        || a.orden - b.orden);
+      .sort((a, b) => posicion(a.curso) - posicion(b.curso) || a.orden - b.orden);
+    return { temas, cursos };
   }
 
   function tarjetaTema(t) {
@@ -170,11 +179,11 @@
     if (esLink(t.short)) {
       acciones.push(crear('a', { clase: 'boton boton--chico boton--claro', href: t.short, 'aria-label': `Ver Short: ${t.tema}`, texto: 'Ver Short' }));
     }
-    return crear('li', { clase: 'tema', 'data-materia': t.materia, 'data-anio': t.anio },
+    return crear('li', { clase: 'tema', 'data-materia': t.materia, 'data-curso': t.curso },
       crear('h4', { clase: 'tema__titulo', texto: t.tema }),
       crear('ul', { clase: 'chips', role: 'list', 'aria-label': 'Datos del tema' },
         crear('li', { clase: 'chip chip--materia', texto: t.materia }),
-        crear('li', { clase: 'chip', texto: `${t.anio} año` }),
+        crear('li', { clase: 'chip', texto: t.curso }),
         t.eje ? crear('li', { clase: 'chip', texto: `Eje: ${t.eje}` }) : null),
       t.para ? crear('p', { clase: 'tema__para' }, crear('strong', { texto: 'Para qué sirve: ' }), t.para) : null,
       acciones.length ? crear('div', { clase: 'tema__acciones' }, acciones) : null);
@@ -182,7 +191,7 @@
 
   const chevron = () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'anio__chevron');
+    svg.setAttribute('class', 'grupo__chevron');
     svg.setAttribute('width', '20');
     svg.setAttribute('height', '20');
     svg.setAttribute('viewBox', '0 0 20 20');
@@ -198,13 +207,14 @@
     return svg;
   };
 
-  function iniciarTemario(temas) {
+  function iniciarTemario({ temas, cursos }, abiertosAlCargar = []) {
     if (!temas.length) throw new Error('data/temario.csv no tiene temas válidos');
     const form = document.getElementById('filtros');
     const buscador = document.getElementById('buscar');
     const lista = document.getElementById('lista-temario');
     const contador = document.getElementById('contador');
     const titulo = document.getElementById('resultado-titulo');
+    const pildorasCurso = document.getElementById('cursos');
 
     for (const span of document.querySelectorAll('.materia__cuenta')) {
       const materia = span.dataset.cuenta;
@@ -212,32 +222,62 @@
       span.textContent = plural(n, 'tema', 'temas');
     }
 
-    const valor = (nombre) => (form.querySelector(`input[name="${nombre}"]:checked`) || {}).value || '';
+    // Una píldora por curso, en el orden del CSV.
+    pildorasCurso.append(...cursos.map((c) => crear('span', { clase: 'pildora', 'data-materia': c.materia },
+      crear('input', { type: 'radio', name: 'curso', id: `curso-${c.slug}`, value: c.nombre }),
+      crear('label', { for: `curso-${c.slug}`, texto: c.nombre }))));
+    const cursoDeURL = cursos.find((c) => c.slug === aSlug(new URLSearchParams(location.search).get('curso') || ''));
+    if (cursoDeURL && valor('curso') === '') document.getElementById(`curso-${cursoDeURL.slug}`).checked = true;
 
-    function guardarEnURL(materia, anio) {
+    function valor(nombre) {
+      return (form.querySelector(`input[name="${nombre}"]:checked`) || {}).value || '';
+    }
+
+    // Con una materia elegida, solo se ofrecen sus cursos.
+    function ajustarCursos() {
+      const materia = valor('materia');
+      for (const pildora of pildorasCurso.querySelectorAll('.pildora[data-materia]')) {
+        const oculta = Boolean(materia) && pildora.dataset.materia !== materia;
+        pildora.hidden = oculta;
+        const opcion = pildora.querySelector('input');
+        if (oculta && opcion.checked) document.getElementById('curso-todos').checked = true;
+      }
+    }
+
+    // La consulta que la página escribió por última vez. Un ancla del menú también dispara popstate,
+    // pero deja la consulta igual.
+    let consultaEnURL = location.search;
+    let primeraVez = true;
+    function guardarEnURL(materia, curso) {
       const nuevos = new URLSearchParams();
-      if (materia) nuevos.set('materia', normalizar(materia));
-      if (anio) nuevos.set('anio', anio.replace('º', ''));
+      if (materia) nuevos.set('materia', aSlug(materia));
+      if (curso) nuevos.set('curso', aSlug(curso));
       if (buscador.value.trim()) nuevos.set('q', buscador.value.trim());
       const query = nuevos.toString();
+      // Al cargar se respeta el ancla del link, aunque traiga parámetros de más (?materia=fisica&fbclid=…#libros).
+      // Después, cambiar un filtro lleva al temario.
+      const ancla = primeraVez || !query ? location.hash : '#temario';
+      primeraVez = false;
+      if (location.search === (query ? `?${query}` : '')) return;
       try {
-        history.replaceState(null, '', `${location.pathname}${query ? `?${query}#temario` : location.hash}`);
+        history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${ancla}`);
+        consultaEnURL = location.search;
       } catch (error) {
         // Safari limita las llamadas seguidas: la URL puede quedar atrasada, la lista no.
       }
     }
 
     function dibujar() {
+      ajustarCursos();
       const materia = valor('materia');
-      const anio = valor('anio');
-      const consulta = normalizar(buscador.value);
-      const palabras = consulta ? consulta.split(' ') : [];
+      const curso = valor('curso');
+      const palabras = aPalabras(buscador.value);
       const visibles = temas.filter((t) => (!materia || t.materia === materia)
-        && (!anio || t.anio === anio)
-        && palabras.every((p) => t.busqueda.includes(p)));
+        && (!curso || t.curso === curso)
+        && palabras.every((p) => t.palabras.some((w) => coincide(p, w))));
 
-      titulo.textContent = materia ? `Temario de ${materia}` : 'Todo el temario';
-      const filtrado = Boolean(materia || anio || palabras.length);
+      titulo.textContent = curso || (materia ? `Temario de ${materia}` : 'Todo el temario');
+      const filtrado = Boolean(materia || curso || palabras.length);
       const cuenta = filtrado
         ? `${plural(visibles.length, 'tema', 'temas')} de ${temas.length}`
         : plural(temas.length, 'tema', 'temas');
@@ -252,81 +292,70 @@
           buscador.focus();
         });
         lista.replaceChildren(crear('div', { clase: 'vacio' },
-          crear('p', { texto: 'No hay temas que coincidan con esa materia, ese año o esa búsqueda.' }),
+          crear('p', { texto: 'No hay temas que coincidan con esa materia, ese curso o esa búsqueda.' }),
           limpiar));
-        guardarEnURL(materia, anio);
+        guardarEnURL(materia, curso);
         return;
       }
 
-      const grupos = ANIOS.map((a) => [a, visibles.filter((t) => t.anio === a)]).filter(([, ts]) => ts.length);
-      const abrirTodos = Boolean(anio || palabras.length) || grupos.length === 1;
+      const grupos = cursos.map((c) => [c, visibles.filter((t) => t.curso === c.nombre)]).filter(([, ts]) => ts.length);
+      const abrirTodos = Boolean(curso || palabras.length) || grupos.length === 1;
       const abrirPrimero = window.matchMedia('(min-width: 1024px)').matches;
-      lista.replaceChildren(...grupos.map(([a, ts], indice) => {
-        const nota = a === '6º' && ts.some((t) => t.materia === 'Matemática')
-          ? crear('p', { clase: 'anio__nota', texto: NOTA_6_MATEMATICA })
-          : null;
-        return crear('details', { clase: 'anio', open: abrirTodos || (abrirPrimero && indice === 0) },
-          crear('summary', {},
-            crear('span', { clase: 'anio__nombre', texto: `${a} año` }),
-            crear('span', { clase: 'anio__cuenta', texto: plural(ts.length, 'tema', 'temas') }),
-            chevron()),
-          crear('div', { clase: 'anio__cuerpo' },
-            nota,
-            crear('ul', { clase: 'temas', role: 'list' }, ts.map(tarjetaTema))));
-      }));
-      guardarEnURL(materia, anio);
+      const abiertos = abiertosAlCargar;
+      abiertosAlCargar = [];
+      lista.replaceChildren(...grupos.map(([c, ts], indice) => crear('details', { clase: 'grupo', open: abrirTodos || (abrirPrimero && indice === 0) || abiertos.includes(c.nombre) },
+        crear('summary', {},
+          crear('span', { clase: 'grupo__nombre', texto: c.nombre }),
+          crear('span', { clase: 'grupo__meta' },
+            crear('span', { clase: 'grupo__cuenta', texto: plural(ts.length, 'tema', 'temas') }),
+            chevron())),
+        crear('div', { clase: 'grupo__cuerpo' },
+          crear('ul', { clase: 'temas', role: 'list' }, ts.map(tarjetaTema))))));
+      guardarEnURL(materia, curso);
     }
 
     let espera;
     form.addEventListener('change', (evento) => {
-      if (evento.target.name === 'materia' || evento.target.name === 'anio') dibujar();
+      if (evento.target.name === 'materia' || evento.target.name === 'curso') dibujar();
     });
     buscador.addEventListener('input', () => {
       clearTimeout(espera);
       espera = setTimeout(dibujar, 250);
+    });
+    // Al volver atrás, los filtros vuelven a los de la URL. Si solo cambió el ancla, no se toca nada.
+    addEventListener('popstate', () => {
+      if (location.search === consultaEnURL) return;
+      consultaEnURL = location.search;
+      const params = new URLSearchParams(location.search);
+      const materia = MATERIAS.find((m) => aSlug(m) === aSlug(params.get('materia') || '')) || '';
+      const curso = cursos.find((c) => c.slug === aSlug(params.get('curso') || ''));
+      const consulta = (params.get('q') || '').slice(0, 100);
+      if (materia === valor('materia') && (curso ? curso.nombre : '') === valor('curso') && consulta === buscador.value.trim()) return;
+      clearTimeout(espera);
+      form.querySelector(`input[name="materia"][value="${materia}"]`).checked = true;
+      document.getElementById(curso ? `curso-${curso.slug}` : 'curso-todos').checked = true;
+      buscador.value = consulta;
+      dibujar();
     });
     dibujar();
   }
 
   /* Libros */
 
-  function formatearAnios(texto) {
-    const anios = separarAnios(texto).sort((a, b) => ANIOS.indexOf(a) - ANIOS.indexOf(b));
-    if (!anios.length) return '';
-    const indices = anios.map((a) => ANIOS.indexOf(a));
-    const seguidos = indices.every((n, j) => j === 0 || n === indices[j - 1] + 1);
-    if (anios.length === 1) return `${anios[0]} año`;
-    if (anios.length === 2) return `${anios[0]} y ${anios[1]} año`;
-    if (seguidos) return `${anios[0]} a ${anios[anios.length - 1]} año`;
-    return `${anios.slice(0, -1).join(', ')} y ${anios[anios.length - 1]} año`;
-  }
-
-  function listarAnios(anios) {
-    if (anios.length === 1) return anios[0];
-    return `${anios.slice(0, -1).join(', ')} y ${anios[anios.length - 1]}`;
-  }
-
   function dibujarLibros(filas) {
     const contenedor = document.getElementById('lista-libros');
     const grupos = MATERIAS.map((materia) => {
       const libros = filas.filter((f) => normalizarMateria(f.materia) === materia && f['título']);
       if (!libros.length) return null;
-      const cubiertos = new Set(libros.flatMap((l) => separarAnios(l['año'])));
-      const faltan = ANIOS.filter((a) => !cubiertos.has(a));
       return crear('div', { clase: 'libros__grupo' },
         crear('h3', { texto: materia }),
         crear('ul', { clase: 'grilla grilla--libros', role: 'list' }, libros.map((l) => {
           const autoria = [l.autor, l.editorial].filter(Boolean).join(' · ');
-          const anios = formatearAnios(l['año']);
           return crear('li', { clase: 'tarjeta libro' },
             crear('h4', { texto: l['título'] }),
             autoria ? crear('p', { clase: 'libro__autor', texto: autoria }) : null,
-            anios ? crear('ul', { clase: 'chips', role: 'list', 'aria-label': 'Años' }, crear('li', { clase: 'chip', texto: anios })) : null,
             l.nota ? crear('p', { clase: 'libro__nota', texto: l.nota }) : null);
-        })),
-        faltan.length
-          ? crear('p', { clase: 'libros__aviso', texto: `Para ${listarAnios(faltan)} año de ${materia} no hay libro recomendado.` })
-          : null);
+        })));
     }).filter(Boolean);
     contenedor.replaceChildren(...grupos);
   }
@@ -335,16 +364,13 @@
 
   iniciarMenu();
 
-  // Los filtros de la URL (?materia=fisica&anio=2&q=newton) se aplican enseguida, antes de que se pueda tocar el formulario.
+  // Los filtros de la URL (?materia=fisica&q=newton) se aplican enseguida, antes de que se pueda tocar el formulario.
+  // El curso (?curso=fisica-1) se marca cuando el CSV crea sus píldoras.
   (() => {
     const form = document.getElementById('filtros');
     const params = new URLSearchParams(location.search);
-    const marcar = (nombre, v) => {
-      const opcion = [...form.querySelectorAll(`input[name="${nombre}"]`)].find((i) => i.value === v);
-      if (opcion) opcion.checked = true;
-    };
-    marcar('materia', MATERIAS.find((m) => normalizar(m) === normalizar(params.get('materia') || '')) || '');
-    marcar('anio', ANIOS.find((a) => a === `${params.get('anio')}º`) || '');
+    const materia = MATERIAS.find((m) => aSlug(m) === aSlug(params.get('materia') || ''));
+    if (materia) form.querySelector(`input[name="materia"][value="${materia}"]`).checked = true;
     document.getElementById('buscar').value = (params.get('q') || '').slice(0, 100);
     form.addEventListener('submit', (evento) => evento.preventDefault());
   })();
@@ -353,17 +379,23 @@
   // Se guarda la posición al salir y se restaura cuando todo está dibujado.
   const navegacion = performance.getEntriesByType('navigation')[0];
   const tipoNavegacion = (navegacion && navegacion.type) || 'navigate';
+  // También se guardan los cursos abiertos: sin ellos, la misma posición cae en otro lugar.
   let yGuardado = null;
+  let abiertosGuardados = [];
   try {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     const guardado = JSON.parse(sessionStorage.getItem('loiaAcademy:scroll') || 'null');
-    if (tipoNavegacion !== 'navigate' && guardado && guardado.url === location.href) yGuardado = guardado.y;
+    if (tipoNavegacion !== 'navigate' && guardado && guardado.url === location.href) {
+      yGuardado = guardado.y;
+      if (Array.isArray(guardado.abiertos)) abiertosGuardados = guardado.abiertos;
+    }
   } catch (error) {
     // Sin sessionStorage: queda el comportamiento del navegador.
   }
   addEventListener('pagehide', () => {
     try {
-      sessionStorage.setItem('loiaAcademy:scroll', JSON.stringify({ url: location.href, y: Math.round(scrollY) }));
+      const abiertos = [...document.querySelectorAll('#lista-temario details[open] .grupo__nombre')].map((n) => n.textContent);
+      sessionStorage.setItem('loiaAcademy:scroll', JSON.stringify({ url: location.href, y: Math.round(scrollY), abiertos }));
     } catch (error) {
       // Sin sessionStorage.
     }
@@ -376,7 +408,7 @@
   }
 
   const temarioListo = cargarCSV('data/temario.csv')
-    .then((filas) => iniciarTemario(prepararTemas(filas)))
+    .then((filas) => iniciarTemario(prepararTemas(filas), abiertosGuardados))
     .catch(() => {
       document.getElementById('temario').classList.add('temario--sin-datos');
       mostrarError(document.getElementById('lista-temario'), 'el temario', 'data/temario.csv');
@@ -414,5 +446,5 @@
   });
 
   // Para las pruebas: el parser y la normalización, sin tocar la página.
-  window.loiaAcademy = { parsearCSV, normalizar, formatearAnios };
+  window.loiaAcademy = { parsearCSV, normalizar, aSlug, aPalabras, coincide };
 })();
