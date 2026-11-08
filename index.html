@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>loiaAcademy · Matemática y física para la facultad</title>
   <meta name="description" content="Canal de YouTube para entender la matemática y la física de los primeros años de la facultad: precálculo, cálculo, introducción a la física y física 1, 2 y 3. Una clase con pizarrón por tema, Shorts sobre para qué sirve cada uno y Shorts sobre descubrimientos científicos recientes.">
-  <meta name="theme-color" content="#0A2237">
+  <meta name="theme-color" content="#0B1020">
   <link rel="icon" href="data:,">
 
   <meta property="og:type" content="website">
@@ -16,19 +16,22 @@
   <meta property="og:image" content="https://loiaconobruno.github.io/loiaAcademy/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="loiaAcademy: matemática y física de los primeros años de la facultad">
+  <meta property="og:image:alt" content="loiaAcademy: matemática y física de la facultad, en el pizarrón">
   <meta name="twitter:card" content="summary_large_image">
 
   <script>document.documentElement.classList.add('js');</script>
+  <link rel="preload" href="assets/fuentes/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="data/temario.csv" as="fetch" crossorigin>
+  <link rel="preload" href="data/libros.csv" as="fetch" crossorigin>
   <link rel="stylesheet" href="css/estilos.css">
   <script src="js/app.js" defer></script>
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
 
-  <header class="encabezado">
+  <header class="encabezado oscuro">
     <div class="contenedor encabezado__fila">
-      <a class="marca" href="#inicio">loiaAcademy</a>
+      <a class="marca" href="#inicio">loia<span>Academy</span></a>
       <button class="menu-boton" type="button" aria-expanded="false" aria-controls="menu">
         <svg class="icono-abrir" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <svg class="icono-cerrar" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -46,18 +49,67 @@
   </header>
 
   <main id="contenido" tabindex="-1">
-    <section id="inicio" class="inicio" aria-labelledby="inicio-titulo">
-      <div class="contenedor">
-        <div class="inicio__tarjeta">
-          <h1 id="inicio-titulo">loiaAcademy</h1>
-          <div class="inicio__texto">
-            <p>loiaAcademy es un canal de YouTube para entender la matemática y la física de los primeros años de la facultad: precálculo, cálculo, introducción a la física y física 1, 2 y 3. Cada tema tiene una clase larga con pizarrón, paso a paso y con todo el rigor, y un Short que muestra para qué sirve en la vida real.</p>
-            <p>Además, hay Shorts sobre descubrimientos científicos recientes: qué se encontró, por qué importa y qué tenés que estudiar para entenderlo.</p>
-          </div>
+    <section id="inicio" class="inicio oscuro" aria-labelledby="inicio-titulo">
+      <div class="contenedor inicio__grilla">
+        <div class="inicio__texto">
+          <p class="etiqueta"><span class="etiqueta__punto" aria-hidden="true"></span>Canal de YouTube · Matemática y física</p>
+          <h1 id="inicio-titulo">Matemática y física de la facultad, <span class="resalte">en el pizarrón.</span></h1>
+          <p class="inicio__bajada">Una clase por tema, paso a paso, y un Short que te muestra para qué sirve.</p>
           <div class="inicio__acciones">
-            <a class="boton" href="https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law">Ver el canal en YouTube</a>
-            <a class="boton boton--oscuro" href="#temario">Ver el temario</a>
+            <a class="boton boton--grande" href="https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+              Ver el canal
+            </a>
+            <a class="boton boton--fantasma boton--grande" href="#temario">Explorar el temario</a>
           </div>
+          <ul class="cifras" role="list">
+            <li><strong data-cifra="temas">78</strong> temas</li>
+            <li><strong data-cifra="cursos">10</strong> cursos</li>
+            <li><strong>3</strong> formatos</li>
+          </ul>
+        </div>
+
+        <div class="pizarron" aria-hidden="true">
+          <svg viewBox="0 0 520 420" width="520" height="420" focusable="false">
+            <defs>
+              <pattern id="cuadricula" width="24" height="24" patternUnits="userSpaceOnUse">
+                <path d="M24 0H0V24" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+              </pattern>
+              <linearGradient id="brillo" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1f2a5c"/>
+                <stop offset="1" stop-color="#0e1430"/>
+              </linearGradient>
+            </defs>
+            <rect x="20" y="20" width="480" height="380" rx="28" fill="url(#brillo)" stroke="#ffffff" stroke-opacity="0.12"/>
+            <rect x="20" y="20" width="480" height="380" rx="28" fill="url(#cuadricula)"/>
+            <g fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M64 300H452M260 336V116"/>
+              <path d="M444 293l8 7-8 7M253 124l7-8 7 8"/>
+            </g>
+            <path class="pizarron__curva" pathLength="1" d="M140 124C188 334 332 334 380 124" fill="none" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="260" cy="281" r="6" fill="#38BDF8"/>
+            <g font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#ffffff">
+              <text x="476" y="84" font-size="22" text-anchor="end">f(x) = ax² + bx + c</text>
+              <text x="52" y="350" font-size="17" fill-opacity="0.45">F = m · a</text>
+              <text x="52" y="378" font-size="17" fill-opacity="0.45">v = v₀ + a · t</text>
+            </g>
+            <g>
+              <rect x="0" y="44" width="200" height="64" rx="16" fill="#ffffff"/>
+              <rect x="14" y="58" width="36" height="36" rx="10" fill="#EFEAFE"/>
+              <path d="M22 84c6-22 14-22 20 0" fill="none" stroke="#6A35F0" stroke-width="2.5" stroke-linecap="round"/>
+              <text x="62" y="72" font-size="11" font-weight="800" letter-spacing="0.6" fill="#6A35F0">PRECÁLCULO</text>
+              <text x="62" y="92" font-size="14" font-weight="700" fill="#0B1020">La parábola</text>
+            </g>
+            <g class="pizarron__tarjeta">
+              <rect x="292" y="314" width="228" height="96" rx="16" fill="#6A35F0"/>
+              <text x="310" y="340" font-size="11" font-weight="800" letter-spacing="0.6" fill="#BAE6FD">¿PARA QUÉ SIRVE?</text>
+              <text font-size="13" font-weight="600" fill="#ffffff">
+                <tspan x="310" y="362">La trayectoria de una pelota</tspan>
+                <tspan x="310" y="380">y la forma de las antenas</tspan>
+                <tspan x="310" y="398">satelitales.</tspan>
+              </text>
+            </g>
+          </svg>
         </div>
       </div>
     </section>
@@ -65,21 +117,31 @@
     <section id="formatos" class="seccion seccion--alt" aria-labelledby="formatos-titulo">
       <div class="contenedor">
         <div class="seccion__encabezado">
+          <p class="sobretitulo">Cómo se aprende</p>
           <h2 id="formatos-titulo">Los tres formatos</h2>
         </div>
         <ul class="grilla grilla--3" role="list">
           <li class="tarjeta formato">
-            <svg class="formato__icono" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5 M22 9v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            <div class="formato__cabeza">
+              <span class="formato__icono" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5 M22 9v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+              <span class="formato__numero" aria-hidden="true">01</span>
+            </div>
             <h3>Clases</h3>
             <p>Una clase por tema, en el pizarrón, paso a paso y con todo el rigor. Arranca contando para qué sirve el tema y después lo desarrolla completo.</p>
           </li>
           <li class="tarjeta formato">
-            <svg class="formato__icono" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/></svg>
+            <div class="formato__cabeza">
+              <span class="formato__icono" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 9.5v5l4-2.5z" fill="currentColor"/></svg></span>
+              <span class="formato__numero" aria-hidden="true">02</span>
+            </div>
             <h3>¿Para qué sirve?</h3>
             <p>Un Short por tema que te muestra dónde aparece en la vida real, como la tarifa del taxi o el cinturón de seguridad. No explica la matemática: termina mandándote a la clase.</p>
           </li>
           <li class="tarjeta formato">
-            <svg class="formato__icono" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M10 3l1.9 5.6L17.5 10.5l-5.6 1.9L10 18l-1.9-5.6L2.5 10.5l5.6-1.9z M18.5 14l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            <div class="formato__cabeza">
+              <span class="formato__icono" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M10 3l1.9 5.6L17.5 10.5l-5.6 1.9L10 18l-1.9-5.6L2.5 10.5l5.6-1.9z M18.5 14l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <span class="formato__numero" aria-hidden="true">03</span>
+            </div>
             <h3>Recién descubierto</h3>
             <p>Descubrimientos científicos recientes, en menos de 3 minutos: qué se encontró, por qué importa y qué tenés que estudiar para entenderlo. La fuente y su fecha, siempre en pantalla.</p>
           </li>
@@ -90,6 +152,7 @@
     <section id="temario" class="seccion" aria-labelledby="temario-titulo">
       <div class="contenedor">
         <div class="seccion__encabezado">
+          <p class="sobretitulo">78 temas, curso por curso</p>
           <h2 id="temario-titulo">Temario</h2>
           <p class="bajada solo-js">Elegí una materia y un curso, o buscá un tema por su nombre, su eje o para qué sirve.</p>
           <p class="bajada sin-js">Los 78 temas, por materia y curso, con para qué sirve cada uno.</p>
@@ -150,9 +213,12 @@
         </div>
 
         <aside class="destacado" aria-labelledby="mapa-titulo">
-          <h3 id="mapa-titulo">Mapa del temario</h3>
-          <p>Cómo se conectan los temas de Matemática con los de Física, curso por curso, y qué clase de Matemática conviene ver antes de algunos temas de Física.</p>
-          <a class="boton" href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/mapas.md">Ver el mapa</a>
+          <div class="destacado__texto">
+            <p class="destacado__etiqueta">Mapa del temario</p>
+            <h3 id="mapa-titulo">Cómo se conectan Matemática y Física</h3>
+            <p>Los temas de Matemática que aparecen en Física, curso por curso, y qué clase conviene ver antes de algunos temas de Física.</p>
+          </div>
+          <a class="boton boton--blanco boton--grande" href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/mapas.md">Ver el mapa</a>
         </aside>
       </div>
     </section>
@@ -160,8 +226,9 @@
     <section id="libros" class="seccion seccion--alt" aria-labelledby="libros-titulo">
       <div class="contenedor">
         <div class="seccion__encabezado">
+          <p class="sobretitulo">Para estudiar más</p>
           <h2 id="libros-titulo">Libros</h2>
-          <p class="bajada">Los libros de referencia del canal, por materia.</p>
+          <p class="bajada">Los libros de referencia del canal, de Matemática y de Física.</p>
         </div>
         <div id="lista-libros" class="libros">
           <noscript>
@@ -172,39 +239,57 @@
     </section>
   </main>
 
-  <footer class="pie">
-    <div class="contenedor pie__grilla">
-      <div class="pie__marca">
-        <p class="marca">loiaAcademy</p>
-        <p>Matemática y física de los primeros años de la facultad, explicadas con pizarrón en YouTube.</p>
+  <footer class="pie oscuro">
+    <div class="contenedor">
+      <div class="pie__llamado">
+        <div>
+          <h2 id="pie-llamado">Seguí loiaAcademy en YouTube</h2>
+          <p>Suscribite para ver cada clase y cada Short apenas salen.</p>
+        </div>
+        <a class="boton boton--celeste boton--grande" href="https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+          Ir al canal
+        </a>
       </div>
-      <nav class="pie__columna" aria-labelledby="pie-pagina">
-        <h2 id="pie-pagina">En esta página</h2>
-        <ul>
-          <li><a href="#formatos">Formatos</a></li>
-          <li><a href="#temario">Temario</a></li>
-          <li><a href="#libros">Libros</a></li>
-        </ul>
-      </nav>
-      <nav class="pie__columna" aria-labelledby="pie-github">
-        <h2 id="pie-github">En GitHub</h2>
-        <ul>
-          <li><a href="https://github.com/LoiaconoBruno/loiaAcademy">Repositorio</a></li>
-          <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/mapas.md">Mapa del temario</a></li>
-          <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/shorts.md">Cómo son los Shorts</a></li>
-          <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/data/temario.csv">El temario en CSV</a></li>
-        </ul>
-      </nav>
-      <div class="pie__columna">
-        <h2 id="pie-canal">Canal y licencia</h2>
-        <ul role="list" aria-labelledby="pie-canal">
-          <li><a href="https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law">Canal de YouTube</a></li>
-          <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/LICENSE">Licencia CC BY-NC-SA 4.0</a></li>
-        </ul>
+
+      <div class="pie__grilla">
+        <div class="pie__marca">
+          <p class="marca">loia<span>Academy</span></p>
+          <p>Matemática y física de los primeros años de la facultad, explicadas con pizarrón en YouTube.</p>
+        </div>
+        <nav class="pie__columna" aria-labelledby="pie-pagina">
+          <h2 id="pie-pagina">En esta página</h2>
+          <ul>
+            <li><a href="#formatos">Formatos</a></li>
+            <li><a href="#temario">Temario</a></li>
+            <li><a href="#libros">Libros</a></li>
+          </ul>
+        </nav>
+        <nav class="pie__columna" aria-labelledby="pie-github">
+          <h2 id="pie-github">En GitHub</h2>
+          <ul>
+            <li><a href="https://github.com/LoiaconoBruno/loiaAcademy">Repositorio</a></li>
+            <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/mapas.md">Mapa del temario</a></li>
+            <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/shorts.md">Cómo son los Shorts</a></li>
+            <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/data/temario.csv">El temario en CSV</a></li>
+          </ul>
+        </nav>
+        <div class="pie__columna">
+          <h2 id="pie-canal">Canal y licencia</h2>
+          <ul role="list" aria-labelledby="pie-canal">
+            <li><a href="https://www.youtube.com/channel/UC9-PBudeytymdwUbjK0-Law">Canal de YouTube</a></li>
+            <li><a href="https://github.com/LoiaconoBruno/loiaAcademy/blob/main/LICENSE">Licencia CC BY-NC-SA 4.0</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="contenedor pie__base">
-      <p>Temario actualizado el <time datetime="2026-10-07">7 de octubre de 2026</time>. Contenido bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">CC BY-NC-SA 4.0</a>.</p>
+
+      <div class="pie__base">
+        <p>© 2026 Bruno Loiacono · Contenido bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">CC BY-NC-SA 4.0</a> · Temario actualizado el <time datetime="2026-10-07">7 de octubre de 2026</time></p>
+        <a class="pie__arriba" href="#inicio">
+          Volver arriba
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
   </footer>
 </body>

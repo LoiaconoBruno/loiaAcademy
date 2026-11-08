@@ -216,6 +216,10 @@
     const titulo = document.getElementById('resultado-titulo');
     const pildorasCurso = document.getElementById('cursos');
 
+    // Las cifras del inicio salen del CSV, así no quedan desactualizadas.
+    for (const cifra of document.querySelectorAll('[data-cifra="temas"]')) cifra.textContent = temas.length;
+    for (const cifra of document.querySelectorAll('[data-cifra="cursos"]')) cifra.textContent = cursos.length;
+
     for (const span of document.querySelectorAll('.materia__cuenta')) {
       const materia = span.dataset.cuenta;
       const n = temas.filter((t) => !materia || t.materia === materia).length;
@@ -342,22 +346,25 @@
 
   /* Libros */
 
+  // Cada libro con una tapa dibujada en CSS (decorativa: el título y el autor también están en el texto).
   function dibujarLibros(filas) {
     const contenedor = document.getElementById('lista-libros');
-    const grupos = MATERIAS.map((materia) => {
-      const libros = filas.filter((f) => normalizarMateria(f.materia) === materia && f['título']);
-      if (!libros.length) return null;
-      return crear('div', { clase: 'libros__grupo' },
-        crear('h3', { texto: materia }),
-        crear('ul', { clase: 'grilla grilla--libros', role: 'list' }, libros.map((l) => {
-          const autoria = [l.autor, l.editorial].filter(Boolean).join(' · ');
-          return crear('li', { clase: 'tarjeta libro' },
-            crear('h4', { texto: l['título'] }),
-            autoria ? crear('p', { clase: 'libro__autor', texto: autoria }) : null,
-            l.nota ? crear('p', { clase: 'libro__nota', texto: l.nota }) : null);
-        })));
-    }).filter(Boolean);
-    contenedor.replaceChildren(...grupos);
+    const libros = MATERIAS.flatMap((materia) => filas
+      .filter((f) => normalizarMateria(f.materia) === materia && f['título'])
+      .map((f) => ({ ...f, materia })));
+    contenedor.replaceChildren(crear('ul', { clase: 'libros__lista', role: 'list' }, libros.map((l, i) =>
+      crear('li', { clase: 'libro' },
+        crear('div', { clase: 'libro__tapa', 'data-tono': String(i % 7), 'aria-hidden': 'true' },
+          l.editorial ? crear('span', { clase: 'libro__tapa-editorial', texto: l.editorial }) : null,
+          crear('span', { clase: 'libro__tapa-titulo', texto: l['título'] }),
+          l.autor ? crear('span', { clase: 'libro__tapa-autor', texto: l.autor }) : null),
+        crear('div', { clase: 'libro__info' },
+          crear('p', { clase: 'libro__meta' },
+            crear('span', { clase: 'chip chip--materia', texto: l.materia }),
+            l.editorial ? crear('span', { clase: 'libro__editorial', texto: l.editorial }) : null),
+          crear('h3', { texto: l['título'] }),
+          l.autor ? crear('p', { clase: 'libro__autor', texto: l.autor }) : null,
+          l.nota ? crear('p', { clase: 'libro__nota', texto: l.nota }) : null)))));
   }
 
   /* Arranque */
