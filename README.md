@@ -23,6 +23,7 @@ loiaAcademy es un canal de YouTube para entender la matemática y la física de 
 | [data/temario.csv](data/temario.csv) | Los 78 temas: orden, tema, materia, curso, eje, para qué sirve y los links a la clase y al Short. Es la única fuente del temario: la página lo lee y GitHub lo muestra como tabla. |
 | [data/libros.csv](data/libros.csv) | Los libros: título, autor, materia, editorial y una nota. |
 | [assets/img/](assets/img/) | Las imágenes de la página. |
+| [assets/fuentes/](assets/fuentes/) | La fuente de la página, Plus Jakarta Sans, con su licencia (SIL Open Font License 1.1). |
 | [mapas.md](mapas.md) | Cómo se conectan los temas de Matemática con los de Física, y cómo pasás de un Short a la clase que lo explica. |
 | [shorts.md](shorts.md) | Cómo son los Shorts «¿Para qué sirve?» y «Recién descubierto»: formato, fuentes, criterios y cómo se verifica cada dato. |
 | [LICENSE](LICENSE) | La licencia CC BY-NC-SA 4.0. |
