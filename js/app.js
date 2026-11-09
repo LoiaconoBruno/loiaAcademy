@@ -356,7 +356,7 @@
       crear('li', { clase: 'libro' },
         crear('div', { clase: 'libro__tapa', 'data-tono': String(i % 7), 'aria-hidden': 'true' },
           l.editorial ? crear('span', { clase: 'libro__tapa-editorial', texto: l.editorial }) : null,
-          crear('span', { clase: 'libro__tapa-titulo', texto: l['título'] }),
+          crear('span', { clase: 'libro__tapa-titulo', texto: l['título'].replace(/\s+(\d+)$/, '\u00a0$1') }),
           l.autor ? crear('span', { clase: 'libro__tapa-autor', texto: l.autor }) : null),
         crear('div', { clase: 'libro__info' },
           crear('p', { clase: 'libro__meta' },

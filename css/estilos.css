@@ -524,6 +524,13 @@ a.marca:hover {
   }
 }
 
+@media (max-width: 479px) {
+  .pizarron__chip,
+  .pizarron__tarjeta {
+    display: none;
+  }
+}
+
 @keyframes trazar {
   to {
     stroke-dashoffset: 0;
@@ -1173,8 +1180,8 @@ a.marca:hover {
 .destacado::after {
   width: 64px;
   height: 64px;
-  right: 110px;
-  bottom: 18px;
+  right: 20px;
+  bottom: 20px;
   background: rgba(255, 255, 255, 0.12);
 }
 
@@ -1225,6 +1232,11 @@ a.marca:hover {
     gap: 40px;
     margin-top: 80px;
     padding: 48px;
+  }
+
+  .destacado::after {
+    right: 110px;
+    bottom: 18px;
   }
 }
 
@@ -1310,7 +1322,7 @@ a.marca:hover {
 }
 
 .libro__tapa[data-tono="1"] { --tapa: linear-gradient(150deg, #2f5bea, #1d2f9e); }
-.libro__tapa[data-tono="2"] { --tapa: linear-gradient(150deg, #0f766e, #0b4f4a); }
+.libro__tapa[data-tono="2"] { --tapa: linear-gradient(150deg, #0e7490, #164e63); }
 .libro__tapa[data-tono="3"] { --tapa: linear-gradient(150deg, #c2410c, #8a2c08); }
 .libro__tapa[data-tono="4"] { --tapa: linear-gradient(150deg, #db2777, #9d174d); }
 .libro__tapa[data-tono="5"] { --tapa: linear-gradient(150deg, #1f2a5c, #0b1020); }
@@ -1364,6 +1376,17 @@ a.marca:hover {
 
   .libro:hover .libro__tapa {
     transform: rotate(-3deg) translateY(-4px);
+  }
+}
+
+@media (max-width: 639px) {
+  .libro__tapa-editorial,
+  .libro__tapa-autor {
+    display: none;
+  }
+
+  .libro__tapa {
+    justify-content: center;
   }
 }
 
@@ -1528,6 +1551,7 @@ a.marca:hover {
 
 .pie__base p a {
   color: var(--texto-claro);
+  white-space: nowrap;
 }
 
 .pie__base p a:hover {
