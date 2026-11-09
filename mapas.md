@@ -14,7 +14,7 @@ Los 78 temas, curso por curso: 43 de Matemática y 35 de Física.
 
 ```mermaid
 flowchart TB
-    classDef curso fill:#0A2237,stroke:#536679,stroke-width:2px,color:#FFFFFF
+    classDef curso fill:#0B1020,stroke:#6A35F0,stroke-width:2px,color:#FFFFFF
 
     subgraph MAT["🧮 Matemática · 43 temas"]
         direction LR
@@ -40,8 +40,8 @@ flowchart TB
 
     MAT ~~~ FIS
 
-    style MAT fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
-    style FIS fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
+    style MAT fill:#F6F4FB,stroke:#E7E4F0,color:#0B1020
+    style FIS fill:#F6F4FB,stroke:#E7E4F0,color:#0B1020
 ```
 
 ## Conexiones entre Matemática y Física
@@ -50,8 +50,8 @@ Cada flecha une un tema de Matemática con el tema de Física que lo usa. El nú
 
 ```mermaid
 flowchart LR
-    classDef mat fill:#E6F2FF,stroke:#007BFF,color:#0A2237
-    classDef fis fill:#F0F4F8,stroke:#536679,color:#0A2237
+    classDef mat fill:#E0F2FE,stroke:#0369A1,color:#0B1020
+    classDef fis fill:#EFEAFE,stroke:#6A35F0,color:#0B1020
 
     subgraph MAT["🧮 Matemática"]
         M4["4 · Proporcionalidad directa e inversa<br/>Precálculo"]:::mat
@@ -79,8 +79,8 @@ flowchart LR
         F33["33 · Física nuclear: radiactividad, fisión y fusión<br/>Física moderna"]:::fis
     end
 
-    style MAT fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
-    style FIS fill:#F7F9FB,stroke:#ECF0F5,color:#0A2237
+    style MAT fill:#F6F4FB,stroke:#E7E4F0,color:#0B1020
+    style FIS fill:#F6F4FB,stroke:#E7E4F0,color:#0B1020
 
     M4 --> F3
     M36 --> F4
@@ -95,7 +95,7 @@ flowchart LR
     M33 --> F29
     M26 --> F33
 
-    linkStyle default stroke:#007BFF,stroke-width:2px
+    linkStyle default stroke:#6A35F0,stroke-width:2px
 ```
 
 ## Qué matemática usan algunos temas de Física
@@ -123,9 +123,9 @@ Un Short por cada tema del temario: muestra para qué sirve en la vida real y te
 
 ```mermaid
 flowchart TB
-    classDef general fill:#F0F4F8,stroke:#536679,color:#0A2237
-    classDef decision fill:#E6F2FF,stroke:#007BFF,color:#0A2237
-    classDef terminator fill:#0A2237,stroke:#536679,stroke-width:2px,color:#FFFFFF
+    classDef general fill:#F6F4FB,stroke:#7C7694,color:#0B1020
+    classDef decision fill:#EFEAFE,stroke:#6A35F0,color:#0B1020
+    classDef terminator fill:#0B1020,stroke:#6A35F0,stroke-width:2px,color:#FFFFFF
 
     t(["Un tema del temario"]):::terminator
     s["El Short<br/>«¿Para qué sirve?»<br/>te muestra para qué<br/>sirve en la vida real,<br/>sin explicar<br/>la matemática"]:::general
@@ -151,9 +151,9 @@ Cómo llega un descubrimiento a un Short, qué controles pasa antes y a qué cla
 
 ```mermaid
 flowchart TB
-    classDef general fill:#F0F4F8,stroke:#536679,color:#0A2237
-    classDef decision fill:#E6F2FF,stroke:#007BFF,color:#0A2237
-    classDef terminator fill:#0A2237,stroke:#536679,stroke-width:2px,color:#FFFFFF
+    classDef general fill:#F6F4FB,stroke:#7C7694,color:#0B1020
+    classDef decision fill:#EFEAFE,stroke:#6A35F0,color:#0B1020
+    classDef terminator fill:#0B1020,stroke:#6A35F0,stroke-width:2px,color:#FFFFFF
 
     d(["Un descubrimiento<br/>aparece en phys.org,<br/>ScienceDaily<br/>o EurekAlert!"]):::terminator
     nb(["Semana Nobel,<br/>cada octubre:<br/>Medicina, Física<br/>y Química"]):::terminator
